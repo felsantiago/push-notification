@@ -29,6 +29,11 @@ class NotificationController {
 
     const { mensagem } = req.body;
 
+    const response = await Notification.create({
+      content: mensagem,
+      user: user_id,
+    });
+
     if (user_id) {
       const users = req.connectedUsers;
 
@@ -36,17 +41,12 @@ class NotificationController {
         if (!req.io.sockets.connected[socket]) {
           RedisService.delete(user_id, socket);
         } else {
-          req.io.to(socket).emit('notification', mensagem);
+          req.io.to(socket).emit('notification', response);
         }
       });
     }
 
-    await Notification.create({
-      content: mensagem,
-      user: user_id,
-    });
-
-    return res.json('Create notification');
+    return res.json(response);
   }
 
   async update(req, res) {
