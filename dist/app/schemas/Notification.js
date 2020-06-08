@@ -15,6 +15,7 @@ const NotificationSchema = new _mongoose2.default.Schema(
       required: true,
       default: false,
     },
+    data: {},
   },
   {
     timestamps: true,

@@ -27,11 +27,15 @@ class NotificationController {
       return res.status(400).json({ error: 'Validation fails' });
     }
 
-    const { mensagem } = req.body;
+    const { mensagem, data } = req.body;
+
+    let parseJson = null;
+    if (data) parseJson = JSON.parse(data);
 
     const response = await Notification.create({
       content: mensagem,
       user: user_id,
+      data: parseJson,
     });
 
     if (user_id) {
