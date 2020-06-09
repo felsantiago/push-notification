@@ -15,6 +15,16 @@ class NotificationController {
     return res.json(notifications);
   }
 
+  async show(req, res) {
+    const { id } = req.params;
+
+    const notification = await _Notification2.default.findById(id);
+
+    if (notification) return res.json(notification);
+
+    return res.status(400).json({ message: 'Notification not found.' });
+  }
+
   async store(req, res) {
     const schema = Yup.object().shape({
       mensagem: Yup.string().required(),
@@ -53,14 +63,37 @@ class NotificationController {
     return res.json(response);
   }
 
-  async update(req, res) {
+  async patch(req, res) {
     const notification = await _Notification2.default.findByIdAndUpdate(
       req.params.id,
       { read: true },
       { new: true }
     );
 
-    return res.json(notification);
+    if (notification) return res.json(notification);
+
+    return res.status(400).json({ message: 'Notification not found.' });
+  }
+
+  async update(req, res) {
+    const { data } = req.body;
+    const { mensagem } = req.body;
+
+    let parseJson = null;
+    if (data) parseJson = JSON.parse(data);
+
+    const notification = await _Notification2.default.findByIdAndUpdate(
+      req.params.id,
+      { read: true },
+      {
+        content: mensagem,
+        data: parseJson,
+      }
+    );
+
+    if (notification) return res.json(notification);
+
+    return res.status(400).json({ message: 'Notification not found.' });
   }
 }
 

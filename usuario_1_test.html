@@ -1,23 +1,26 @@
 <!DOCTYPE html>
 <html lang="pt_BR">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Recebedor de notificações</title>
-  </head>
-  <body>
-    <script src="http://localhost:3310/socket.io/socket.io.js"></script>
-    <script>
-      const user_id = 1;
-      const socket = io('http://localhost:3310', {
-        query: { user_id },
-      });
 
-      socket.on('notification', data => {
-        console.log(data);
-        document.getElementById('messagebox').innerHTML = data;
-      });
-    </script>
+<head>
+  <meta charset="UTF-8" />
+  <title>Recebedor de notificações</title>
+</head>
 
-    <div id="messagebox"></div>
-  </body>
+<body>
+  <script src="http://localhost:3310/socket.io/socket.io.js"></script>
+  <script>
+    const user_id = 1;
+    const socket = io('http://localhost:3310', {
+      query: { user_id },
+    });
+
+    socket.on('notification', data => {
+      console.log(data);
+      document.getElementById('messagebox').innerHTML = data;
+    });
+  </script>
+
+  <div id="messagebox"></div>
+</body>
+
 </html>

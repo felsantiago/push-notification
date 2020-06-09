@@ -9,7 +9,9 @@ routes.get('/', (req, res) => {
 });
 
 routes.get('/notifications', NotificationController.index);
+routes.get('/notifications/:id', NotificationController.show);
 routes.post('/notifications', NotificationController.store);
+routes.patch('/notifications/:id', NotificationController.patch);
 routes.put('/notifications/:id', NotificationController.update);
 
 export default routes;
